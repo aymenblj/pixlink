@@ -35,8 +35,6 @@ It streamlines batch workflows with efficient memory management and pluggable ca
 
 ## Build
 
-## Build
-
 Make sure to set `OpenCV_DIR` to your OpenCV build directory containing `OpenCVConfig.cmake`.  
 Example on Windows:
 

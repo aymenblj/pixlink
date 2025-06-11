@@ -94,12 +94,8 @@ int main() {
                     .process(key, laplacianEdge)
                     .process(key, medianBlur)
                     .saveAs(key, "animals/median_laplacian", "_med_lap")
-                    .release(key);  // release from cache after processing
+                    .release(key);
         }
-
-        // Unload all images and clear cache at the end
-        pipeline.unloadAll();
-        pipeline.clearCache();
 
         std::cout << "Processing completed successfully.\n";
     } catch (const std::exception& ex) {
