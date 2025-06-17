@@ -80,7 +80,7 @@ public:
         if (!cacheManager->isCached(key)) {
             imageLoader->loadIntoCache(*cacheManager, fullPath.string(), key);
         }
-        workingMap[key] = cacheManager->getCachedShallow(key);
+        workingMap[key] = cacheManager->getCached(key);
         return *this;
     }
 
@@ -95,7 +95,7 @@ public:
     Pipeline& load(const ImageType& image, const std::string& name) {
         std::string key = name;
         imageLoader->loadIntoCache(*cacheManager, image, key);
-        workingMap[key] = cacheManager->getCachedShallow(key);
+        workingMap[key] = cacheManager->getCached(key);
         return *this;
     }
 
@@ -127,7 +127,7 @@ public:
             if (!cacheManager->isCached(key)) {
                 imageLoader->loadIntoCache(*cacheManager, entry.path().string(), key);
             }
-            workingMap[key] = cacheManager->getCachedShallow(key);
+            workingMap[key] = cacheManager->getCached(key);
         }
         return *this;
     }
@@ -189,6 +189,16 @@ public:
         auto it = assertInWorkingMap(key);
         it->second = op(it->second);
         return *this;
+    }
+
+    Pipeline& filter(std::function<bool(const std::string&, const ImageType&)> pred) {
+    for (auto it = workingMap.begin(); it != workingMap.end(); ) {
+        if (!pred(it->first, it->second))
+            it = workingMap.erase(it);
+        else
+            ++it;
+    }
+    return *this;
     }
 
     // --- Saving images ---
@@ -326,6 +336,9 @@ public:
         cacheManager->clear();
         return *this;
     }
+
+    // get workingMap
+    ImageMap& getWorkingMap() { return workingMap; }
 
 private:
     std::string inputFolder;

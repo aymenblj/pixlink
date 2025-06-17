@@ -75,7 +75,7 @@ public:
         auto it = map_.find(key);
         if (it == map_.end()) throw std::runtime_error("Key not found in cache: " + key);
         usage_.splice(usage_.begin(), usage_, it->second.second);
-        return it->second.first;
+        return it->second.first.clone();
     }
 
     /**

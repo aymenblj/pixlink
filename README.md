@@ -22,7 +22,7 @@ It streamlines batch workflows with efficient memory management and pluggable ca
 - Pluggable cache: Swap in unlimited, LRU, or custom strategies
 - Shallow copies: Images reference cached data to avoid heavy I/O
 - Extensible: custom cache, loader, saver
-- Planned: External/distributed cache support (TODO)
+- Planned: External/distributed cache support with Image Processing Params (TODO)
 ---
 
 ## Requirements
@@ -39,7 +39,7 @@ Make sure to set `OpenCV_DIR` to your OpenCV build directory containing `OpenCVC
 Example on Windows:
 
 ```bash
-cmake -S . -B build -DOpenCV_DIR="C:/opencv/build/x64/vc16/lib"
+cmake -S . -B build -G Ninja -DOpenCV_DIR="C:/opencv/build/x64/vc16/lib" 
 cmake --build build
 cd build
 ```
